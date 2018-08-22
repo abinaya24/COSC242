@@ -1,0 +1,25 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int main(void){
+
+    int n;
+    int winner;
+    double total;
+    double pretotal = 0.0;
+    double a, b, c;
+
+    while (1 == scanf("%d%lg%lg%lg", &n, &a, &b, &c)){
+
+        total = a+b+c;
+        if (total > pretotal){
+            winner = n;
+        }
+    }
+
+    printf("Winner is %d", winner);
+
+    return 1;
+}
+
+            

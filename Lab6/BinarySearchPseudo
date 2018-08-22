@@ -1,0 +1,9 @@
+1. If the list has no integers, target can't be found and is finished (return 0)
+
+2. Let m be the middle element in the list.
+
+3. If m is equal to the integer were looking for then finished (return 1)
+
+4. If m is greater than the targt integer, then recur to step 1 using all values smaller than m as the new list.
+
+5. Otherwise recur to step one using all values greater than m as our list.

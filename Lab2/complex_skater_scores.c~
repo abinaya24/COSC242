@@ -1,0 +1,39 @@
+#include <stdlib.h>
+#include <stdio.h>
+
+#define ARRAY_SIZE 10
+
+int calculate_mean(int n, double judge[]){
+
+    double total = 0.0, mean;
+    int i;
+    
+    for(i=0; i < n; i++){
+        total += judge[i];
+    }
+    mean = total/n;
+
+    return mean;
+}
+
+int calculate_deviation(double judge[]){
+}
+
+
+
+int main(void){
+
+    int n, count = 0;
+    double a, b, c;
+    double judge1[ARRAY_SIZE],judge2[ARRAY_SIZE},judge3[ARRAY_SIZE];
+
+    while (4 == scanf("%d%lg%lg%lg", n, a, b, c)){
+
+        judge1[count] = a;
+        judge2[count] = b;
+        judge3[count] = c;
+        
+        count++;
+    }
+
+        

@@ -1,0 +1,13 @@
+1. Encapsulation, if there is a compilation issue in the memory allocation part it will show that the problem is within this seperate function - easier to debu
+
+2. An array of char pointers
+
+3. Because strlen does not include the null character (\0) for string termination when counting lenght of strings
+
+4. Yes because you are just repoisitioning the pointers in the array, they still point to the correct string/char
+
+5. Truncates the string being read in to 79 characters or less
+
+6.
+
+

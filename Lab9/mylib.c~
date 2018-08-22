@@ -1,0 +1,10 @@
+#include <stdio.h> /* for fprintf */
+#include <stdlib.h> /* for size-t, malloc, realloc, exit */
+#include "mylib.h"
+
+void *emalloc(size_t s){
+}
+
+void *eralloc(void *p, size_t s){
+}
+
