@@ -1,0 +1,22 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include "mylib.h"
+#include "bst.h"
+
+int main(void) {
+    
+    bst b = bst_new();
+    char word[256];
+    char op;
+    
+    /* We must have a space before the %c */
+    while (2 == scanf(" %c %255s", &op, word)) {
+        if ('+' == op) {
+            bst_insert      rd);
+        } else if ('?' == op) {
+            printf("%d %s\n", htable_search(h, word), word);
+        }
+    }
+    htable_free(h);
+    return EXIT_SUCCESS;
+}
