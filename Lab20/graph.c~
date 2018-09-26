@@ -1,0 +1,127 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include "graph.h"
+#include "mylib.h"
+#include "queue.h"
+
+
+typedef enum state_e {UNVISITED,VISITED_SELF,VISITED_DESCENDANTS} state_t;
+
+struct vertex{
+    int predecessor;
+    int distance;
+    state_t state;
+    int finish;
+};
+    
+struct graphrec{
+    int size;
+    struct vertex *vertices;
+    int **edges;
+};
+
+graph graph_new(int num_vertices){
+
+    int i,j;   
+    graph result = emalloc(sizeof *result);
+
+    result->size = num_vertices;
+    
+    result->vertices = emalloc(num_vertices * sizeof result->vertices[0]);
+    
+    result->edges = emalloc(sizeof result->edges[0] * num_vertices);
+
+
+    for (i = 0; i < num_vertices; i++){
+        result->edges[i] = emalloc(sizeof result->edges[0][0] * num_vertices);
+
+        for (j = 0; j < num_vertices; j++){
+            result->edges[i][j] = 0;
+        }
+    }
+
+    return result;
+    
+}
+
+void graph_free(graph g){
+
+    int i;
+
+    for (i = 0; i < g->size; i++){
+        free(g->edges[i]);
+    }
+    free(g->edges);
+    free(g->vertices);
+    free(g);
+
+    return;
+
+}
+
+void add_edge_bi(graph g, int u, int v){
+    g->edges[u][v] = 1;
+    g->edges[v][u] = 1;
+}
+
+void add_edge_uni(graph g, int u, int v){
+    g->edges[u][v] = 1;
+}
+
+void print_graph(graph g){
+
+    int i, j;
+
+    printf("adjacency list:\n");
+    for (i = 0; i < g->size; i++){
+        printf("%d |", i);
+        for (j = 0; j < g->size; j++){
+            if (g->edges[i][j] == 1){
+                printf(" %d,", j);
+            }
+        }
+        printf("\n");
+    }
+    printf("\n");
+    
+    printf("%s\t%s  %s", "vertex", "distance", "pred\n");
+    for (i = 0; i < g->size; i++){
+        printf("%5d%8d%8d\n", i, g->vertices[i].distance, g->vertices[i].predecessor);
+    }
+    
+}
+
+graph graph_bfs(graph g, int source){
+
+    int i, u, v;
+    queue q = queue_new();
+
+    for (i = 0; i < g->size; i++){
+        g->vertices[i].state = UNVISITED;
+        g->vertices[i].distance = -1;
+        g->vertices[i].predecessor = -1;
+    }
+    g->vertices[source].state = VISITED_SELF;
+    g->vertices[source].distance = 0;
+    enqueue(q, source);
+
+    while (queue_size(q) > 0){
+        u = dequeue(q);
+
+        for (v = 0; v < g->size; v++){
+            if (g->vertices[v].state == UNVISITED && g->edges[u][v] == 1){
+                g->vertices[v].state = VISITED_SELF;
+                g->vertices[v].distance = 1 + g->vertices[u].distance;     
+                g->vertices[v].predecessor = u;
+                enqueue(q, v); 
+            }
+        }
+
+        g->vertices[u].state = VISITED_DESCENDANTS;
+    }
+
+    free(q);
+
+    return g;
+ 
+}

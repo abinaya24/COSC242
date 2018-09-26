@@ -1,0 +1,112 @@
+#include <stdlib.h>
+#include <stdio.h>
+#include "queue.h"
+#include "mylib.h"
+
+
+struct q_item {
+    double item;
+    q_item next;
+};
+
+struct queuerec {
+    q_item first;
+    q_item last;
+    int length;
+};
+
+queue queue_new(){
+
+    queue result;
+
+    result = emalloc(sizeof *result);
+ 
+    result->length = 0;
+    result->first = NULL;
+    result->last = result->first;
+
+    return result;
+}
+
+void enqueue(queue q, double item){
+
+    q_item entry;
+
+    if(q->first == NULL && q->last == NULL){
+        entry = emalloc(sizeof *entry);
+        entry->item = item;
+        entry->next = NULL;
+        q->first = entry;
+        q->last = q->first;
+    } else {
+        entry = emalloc(sizeof *entry);
+        entry->item = item;
+        entry->next = NULL;
+        q->last->next = entry;
+        q->last = entry;
+    }
+    q->length++;
+
+}
+
+double dequeue(queue q){
+
+    double item;
+    q_item node;
+
+    if (q->length > 0){
+        
+        item = q->first->item;
+        node = q->first;
+        node->item = q->first->next->item;
+        q->first = node->next;
+        q->length--;
+        if (q->length == 0){
+            q->last = NULL;
+        }
+        free(node);
+        return item;
+        
+    } else {
+        printf("Queue is empty\n");
+        return 0;
+    }
+
+}
+
+void queue_print(queue q){
+
+    q_item current = NULL;
+
+    if (q->length > 0){
+        current = q->first;
+        while (current->next != NULL){
+            printf("%f\n", current->item);
+            current = current->next;
+        }
+        printf("%f\n", current->item);
+    }
+}
+
+int queue_size(queue q){
+
+    return q->length;
+}
+
+queue queue_free(queue q) {
+    q_item current;
+    q_item next;
+    
+    if (q->length > 0) {
+        current = q->first;
+        
+        while (current->next != NULL) {
+            next = current->next;
+            free(current);
+            current = next;
+        }
+        free(current);
+    }
+    free(q);
+    return q;
+}

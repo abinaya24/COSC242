@@ -1,0 +1,25 @@
+/**
+ * File: graph.h
+ * @author Josh King.
+ */
+
+#ifndef GRAPH_H_
+#define GRAPH_H_
+
+typedef struct graphrec *graph;
+
+
+/**
+ * Prototypes
+ * Purpose: specifies functions to be implemented in the graph.c file, based on
+ * their signatures.
+ */
+extern graph graph_new(int num_vertices);
+extern void graph_free(graph g);
+extern void add_edge_bi(graph g, int u, int v);
+extern void add_edge_uni(graph g, int u, int v);
+extern void print_graph(graph g);
+extern graph graph_dfs(graph g);
+extern void visit(graph g, int v);
+
+#endif

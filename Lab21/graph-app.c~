@@ -1,0 +1,25 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include "graph.h"
+
+int main(void){
+
+    graph g;
+    int size, a, b;
+
+    scanf("%d", &size); 
+    g = graph_new(size);
+
+    while(scanf("%d %d", &a, &b) != -1){
+        add_edge_uni(g, a, b);
+    }
+
+    g = graph_dfs(g);
+
+    print_graph(g);
+
+    
+    graph_free(g);
+
+    return EXIT_SUCCESS;
+}
