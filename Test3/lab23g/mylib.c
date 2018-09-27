@@ -1,44 +1,42 @@
-#include <stdio.h> /* for fprintf */
-#include <stdlib.h> /* for size-t, malloc, realloc, exit */
 #include <assert.h>
 #include <ctype.h>
-#include "mylib.h"
+#include <stdio.h>
+#include <stdlib.h>
 
 void *emalloc(size_t s){
     void *result = malloc(s);
-    if(NULL == result){
-        fprintf(stderr, "Memory allocation failed.\n");
+    if (NULL == result) {
+        fprintf(stderr, "Memory allocation failed!\n");
         exit(EXIT_FAILURE);
     }
     return result;
 }
 
 void *erealloc(void *p, size_t s){
-    void *result = realloc(p, s);
-    if (NULL == result){
-        fprintf(stderr, "Memory reallocation failed.\n");
+    p = realloc(p, s);
+    if (NULL == p) {
+        fprintf(stderr, "Memory allocation failed!\n");
         exit(EXIT_FAILURE);
     }
-    return result;
+    return p;
 }
 
-int getword(char *s, int limit, FILE *stream){
+int getword(char *s, int limit, FILE *stream) {
     int c;
     char *w = s;
     assert(limit > 0 && s != NULL && stream != NULL);
-
-    /*skip to start of the word*/
+    /* skip to the start of the word */
     while (!isalnum(c = getc(stream)) && EOF != c)
         ;
-    if (EOF == c){
+    if (EOF == c) {
         return EOF;
-    } else if (--limit > 0){ /*reduce limit by 1 to allow for the \0 */
+    } else if (--limit > 0) {   /* reduce limit by 1 to allow for the \0 */
         *w++ = tolower(c);
     }
-    while (--limit > 0){
-        if (isalnum(c = getc(stream))){
+    while (--limit > 0) {
+        if (isalnum(c = getc(stream))) {
             *w++ = tolower(c);
-        } else if ('\'' == c){
+        } else if ('\'' == c) {
             limit++;
         } else {
             break;
@@ -47,4 +45,3 @@ int getword(char *s, int limit, FILE *stream){
     *w = '\0';
     return w - s;
 }
-

@@ -15,9 +15,10 @@ void dosearch(bst b, char *key) {
 }
 
 int main(void) {
-    bst b = bst_new();
     
+    bst b = bst_new();
     printf("inserting d,b,f,a,c,e,g\n");
+    
     b = bst_insert(b, "d");
     b = bst_insert(b, "b");
     b = bst_insert(b, "f");
